@@ -1,0 +1,19 @@
+ninja_required_version = 1.3
+
+cc = gcc
+cflags = -I.
+builddir = bin
+objects = $builddir/depen.o $builddir/main.o
+root = .
+
+rule cc
+  command = $cc $cflags -c $in -o $out
+
+rule link
+  command = $cc $cflags -o $out $in
+  description = LINK $out
+
+build $builddir/depen.o: cc $root/depen.c
+build $builddir/main.o: cc $root/main.c
+
+build $builddir/program: link $builddir/main.o $builddir/depen.o
